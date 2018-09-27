@@ -49,7 +49,7 @@ async def on_message(message):
         embed.add_field(name="September",value="Messages alluding to September will link to the youtube video for September (Bass Boosted)")
         embed.add_field(name="its_been",value="Messages in which it has been will send a copy of its_been.mp3")
         embed.add_field(name="VORE",value="Messages containing the forbidden v-word will reset the counter and announce how long it has been since the word was used as well has how many times that user has used the word")
-	embed.add_field(name="!bigdickenergy", value="Tells you what percentage Big Dick Energy you have today.")
+        embed.add_field(name="!bigdickenergy", value="Tells you what percentage Big Dick Energy you have today.")
         embed.add_field(name="!roll XdY",value="Rolls X Y-sided dice and sends back the result")
         embed.add_field(name="!shrug (@ user)",value="Sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here)")
         embed.add_field(name="!anime",value="Selects a random anime from MyAnimeList (In testing)")
