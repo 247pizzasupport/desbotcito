@@ -121,11 +121,11 @@ async def on_message(message):
         elapsed_time = 0
         current_time = datetime.datetime.now().timestamp()
         prev_time = 0
-        c.execute('SELECT * FROM vore WHERE channel=?', (str(message.channel),))
+        c.execute('SELECT * FROM vore WHERE channel=?', (str(message.channel.id),))
         data = c.fetchall()
         if(len(data) == 0):
             msg = "This is the first time someone has used the v-word."
-            c.execute('INSERT INTO vore VALUES (?,?)', (str(message.channel), str(current_time)))
+            c.execute('INSERT INTO vore VALUES (?,?)', (str(message.channel.id), str(current_time)))
         else:
             prev_time = float(data[0][1])
             elapsed_time = datetime.timedelta(seconds = current_time - prev_time)
@@ -134,7 +134,7 @@ async def on_message(message):
             minutes = int((elapsed_time.seconds/60)%60)
             seconds = elapsed_time.seconds%60
             msg = message.author.mention+' used the v-word. We went ' + str(days) + ' days, ' + str(hours) + ' hours, ' + str(minutes) + ' minutes, and ' + str(seconds) + ' seconds without mentioning it.';
-            c.execute('UPDATE vore SET datetime=? WHERE channel=?', (str(current_time), str(message.channel)))
+            c.execute('UPDATE vore SET datetime=? WHERE channel=?', (str(current_time), str(message.channel.id)))
         count = 0
         c.execute('SELECT * FROM voreusage where userid=? AND server=?', (str(message.author),str(message.server)))
         data = c.fetchall()
@@ -143,7 +143,7 @@ async def on_message(message):
             c.execute('INSERT INTO voreusage VALUES (?,?,?)', (str(message.author), count, str(message.server)))
         else:
             count = int(data[0][1]) + 1
-            c.execute('UPDATE voreusage SET count=? WHERE userid=? AND SERVER=?', (count, str(message.author), str(message.server)))
+            c.execute('UPDATE voreusage SET count=? WHERE userid=? AND server=?', (count, str(message.author), str(message.server)))
         mention = message.author.mention+' has used the v-word ' + str(count) + ' time' + 's'*(1 if count>0 else 0) + "."
         await client.send_message(message.channel, msg)
         await client.send_message(message.channel, mention)
