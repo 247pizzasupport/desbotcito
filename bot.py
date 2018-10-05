@@ -114,7 +114,7 @@ async def on_message(message):
         msg = "Randomly selected anime: " + response["title"]
         await client.send_message(message.channel, msg)
 
-    if(msg_chk.find("vore") != -1):
+    if("vore" in msg_chk.split(" ")):
         conn = sqlite3.connect(os.environ.get('WORKING_PATH')+'assets/desbotcito_db')
         c = conn.cursor()
         msg = ""
