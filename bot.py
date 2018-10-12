@@ -81,7 +81,7 @@ async def on_message(message):
             msg = message.author.mention+' rolled a ' + str(list) + '. Total is ' + str(sum)
             if(len(msg) > 2000):
                 msg = message.author.mention+' rolled a ' + str(sum) + ' on ' +str(n) + ' d' + str(d) + 's'*(n>1) + '.'
-                await client.send_message(message.channel, msg[i:i+2000])
+                await client.send_message(message.channel, msg)
             else:
                 await client.send_message(message.channel, msg)
 
