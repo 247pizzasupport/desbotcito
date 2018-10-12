@@ -79,7 +79,11 @@ async def on_message(message):
                 list.append(rng)
                 sum = sum + rng
             msg = message.author.mention+' rolled a ' + str(list) + '. Total is ' + str(sum)
-            await client.send_message(message.channel, msg)
+            if(len(msg) > 2000):
+		for i in range(0,len(msg),2000):
+			await client.send_message(message.channel, msg[i:i+2000])
+            else:
+                await client.send_message(message.channel, msg)
 
     if(msg_chk.find("!8ball ") == 0):
         result = 21 - random.randint(1,20)
@@ -114,7 +118,7 @@ async def on_message(message):
         msg = "Randomly selected anime: " + response["title"]
         await client.send_message(message.channel, msg)
 
-    if("vore" in msg_chk.split(" ")):
+    if("vore" in msg_chk.split(" ") or "vored" in msg_chk.split(" ") or "vores" in msg_chk.split(" ") or "voring" in msg_chk.split(" ")):
         conn = sqlite3.connect(os.environ.get('WORKING_PATH')+'assets/desbotcito_db')
         c = conn.cursor()
         msg = ""
