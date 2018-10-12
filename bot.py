@@ -71,7 +71,7 @@ async def on_message(message):
         params = msg_chk[6:]
         n = int(params.split("d")[0])
         d = int(params.split("d")[1])
-        if(not math.isnan(d) and not math.isnan(n)):
+        if(not math.isnan(d) and not math.isnan(n) and d>0 and n>0):
             list = []
             sum = 0
             for i in range(0,n):
