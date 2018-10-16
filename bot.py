@@ -31,6 +31,7 @@ async def on_message(message):
         embed.add_field(name="Valid", value="If you ask 'How valid is ___', the bot will tell you how valid it is. (With new and improved pseudo-randomness!)")
         embed.add_field(name="!8ball", value="Ask the 8ball a question and you will receive an answer.")
         embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
+        embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
         await client.send_message(message.channel, embed=embed)
 
     if(msg_chk.find("alexa") !=-1 and msg_chk.find("play") != -1 and msg_chk.find("despacito") != -1):
@@ -218,5 +219,7 @@ async def on_message(message):
                     pass
         new_im.save(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
         await client.send_file(message.channel, os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
+        os.remove(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"])
+        os.remove(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
 
 client.run(TOKEN)
