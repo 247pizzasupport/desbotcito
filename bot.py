@@ -217,9 +217,10 @@ async def on_message(message):
                     draw.point((x,y),fill=square_im_arr[y][x])
                 except:
                     pass
-        new_im.save(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
-        await client.send_file(message.channel, os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
+        savefile,ext = os.path.splitext(file["filenamme"])
+        new_im.save(os.environ.get("WORKING_PATH")+"pixel/"+savefile+"_icon"+ext)
+        await client.send_file(message.channel, os.environ.get("WORKING_PATH")+"pixel/"+savefile+"_icon"+ext)
         os.remove(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"])
-        os.remove(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"].split(".")[0]+"_icon."+file["filename"].split(".")[1])
+        os.remove(os.environ.get("WORKING_PATH")+"pixel/"+savefile+"_icon"+ext)
 
 client.run(TOKEN)
