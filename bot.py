@@ -60,7 +60,7 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
 
     if(msg_chk.find("how valid am i") == 0):
-        validity = random.Random(hash(subject+str(datetime.datetime.now()))).randint(0,100)
+        validity = random.Random(hash(message.author+str(datetime.datetime.now()))).randint(0,100)
         msg = "You are " + str(validity) + "% valid."
         await client.send_message(message.channel, msg)
 
