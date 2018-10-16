@@ -14,7 +14,23 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    # Commands are not case sensitive, so we make the whole message lowercase
     msg_chk = message.content.lower();
+
+    if(msg_chk == "!help"):
+        embed = discord.Embed(title='Help',description="Below is a list of commands/functions the bot has:")
+        embed.add_field(name="Despacito",value="Messages asking Alexa to play Despacito will link to the youtube video for Despacito")
+        embed.add_field(name="September",value="Messages alluding to September will link to the youtube video for September (Bass Boosted)")
+        embed.add_field(name="its_been",value="Messages in which it has been will send a copy of its_been.mp3")
+        embed.add_field(name="VORE",value="Messages containing the forbidden v-word will reset the counter and announce how long it has been since the word was used as well has how many times that user has used the word")
+        embed.add_field(name="!bigdickenergy", value="Tells you what percentage Big Dick Energy you have today.")
+        embed.add_field(name="!roll XdY",value="Rolls X Y-sided dice and sends back the result")
+        embed.add_field(name="!shrug (@ user)",value="Sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here)")
+        embed.add_field(name="!anime",value="Selects a random anime from MyAnimeList (In testing)")
+        embed.add_field(name="Valid", value="If you ask 'How valid is ___', the bot will tell you how valid it is. (With new and improved pseudo-randomness!)")
+        embed.add_field(name="!8ball", value="Ask the 8ball a question and you will receive an answer.")
+        embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
+        await client.send_message(message.channel, embed=embed)
 
     if(msg_chk.find("alexa") !=-1 and msg_chk.find("play") != -1 and msg_chk.find("despacito") != -1):
         msg = 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
@@ -43,20 +59,10 @@ async def on_message(message):
         msg = subject + " is " + str(validity) + "% valid."
         await client.send_message(message.channel, msg)
 
-    if(msg_chk == "!help"):
-        embed = discord.Embed(title='Help',description="Below is a list of commands/functions the bot has:")
-        embed.add_field(name="Despacito",value="Messages asking Alexa to play Despacito will link to the youtube video for Despacito")
-        embed.add_field(name="September",value="Messages alluding to September will link to the youtube video for September (Bass Boosted)")
-        embed.add_field(name="its_been",value="Messages in which it has been will send a copy of its_been.mp3")
-        embed.add_field(name="VORE",value="Messages containing the forbidden v-word will reset the counter and announce how long it has been since the word was used as well has how many times that user has used the word")
-        embed.add_field(name="!bigdickenergy", value="Tells you what percentage Big Dick Energy you have today.")
-        embed.add_field(name="!roll XdY",value="Rolls X Y-sided dice and sends back the result")
-        embed.add_field(name="!shrug (@ user)",value="Sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here)")
-        embed.add_field(name="!anime",value="Selects a random anime from MyAnimeList (In testing)")
-        embed.add_field(name="Valid", value="If you ask 'How valid is ___', the bot will tell you how valid it is. (With new and improved pseudo-randomness!)")
-        embed.add_field(name="!8ball", value="Ask the 8ball a question and you will receive an answer.")
-        embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
-        await client.send_message(message.channel, embed=embed)
+    if(msg_chk.find("how valid am i") == 0):
+        validity = random.Random(hash(subject+str(datetime.datetime.now()))).randint(0,100)
+        msg = "You are " + str(validity) + "% valid."
+        await client.send_message(message.channel, msg)
 
     if(msg_chk.find("!shrug") == 0):
         msg = "¯\_(ツ)_/¯"
@@ -71,7 +77,7 @@ async def on_message(message):
         params = msg_chk[6:]
         n = int(params.split("d")[0])
         d = int(params.split("d")[1])
-        if(not math.isnan(d) and not math.isnan(n) and d>0 and n>0):
+        if(not math.isnan(d) and not math.isnan(n) and d>0 and n>0 and d<10001 and n<10001):
             list = []
             sum = 0
             for i in range(0,n):
@@ -84,6 +90,9 @@ async def on_message(message):
                 await client.send_message(message.channel, msg)
             else:
                 await client.send_message(message.channel, msg)
+        else:
+            msg = "Parameters are not valid! Please try with more reasonable numbers."
+            await client.send_message(message.channel, msg)
 
     if(msg_chk.find("!8ball ") == 0):
         result = 21 - random.randint(1,20)
@@ -118,7 +127,8 @@ async def on_message(message):
         msg = "Randomly selected anime: " + response["title"]
         await client.send_message(message.channel, msg)
 
-    if("vore" in msg_chk.split(" ") or "vored" in msg_chk.split(" ") or "vores" in msg_chk.split(" ") or "voring" in msg_chk.split(" ")):
+    msg_clean = re.sub("[^A-z0-9]","",msg_chk)
+    if("vore" in msg_clean.split(" ") or "vored" in msg_clean.split(" ") or "vores" in msg_clean.split(" ") or "voring" in msg_clean.split(" ")):
         conn = sqlite3.connect(os.environ.get('WORKING_PATH')+'assets/desbotcito_db')
         c = conn.cursor()
         msg = ""
