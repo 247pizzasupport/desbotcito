@@ -217,7 +217,7 @@ async def on_message(message):
                     draw.point((x,y),fill=square_im_arr[y][x])
                 except:
                     pass
-        savefile,ext = os.path.splitext(file["filenamme"])
+        savefile,ext = os.path.splitext(file["filename"])
         new_im.save(os.environ.get("WORKING_PATH")+"pixel/"+savefile+"_icon"+ext)
         await client.send_file(message.channel, os.environ.get("WORKING_PATH")+"pixel/"+savefile+"_icon"+ext)
         os.remove(os.environ.get("WORKING_PATH")+"pixel/"+file["filename"])
