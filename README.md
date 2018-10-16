@@ -26,3 +26,4 @@ Below are the current list of functions that the bot has:
 * If you ask 'How valid is ___', the bot will tell you how valid it is (With new and improved pseudo-randomness!).
 * !8ball asks the 8ball a question and you will receive an answer.
 * !fmk x,y,z : Provide the bot with three options and she will select which ones to bed, wed, and behead.
+* !pixel: Messages containing an image along with this command will get a 16px version of that image returned back.
