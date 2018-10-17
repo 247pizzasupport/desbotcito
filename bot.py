@@ -2,6 +2,7 @@
 import discord, math, random, sqlite3, datetime
 import requests, json, re, os, shutil
 from PIL import Image,ImageDraw
+from ctypes.util import find_library
 
 TOKEN = os.environ.get('BOT_TOKEN')
 
@@ -32,7 +33,16 @@ async def on_message(message):
         embed.add_field(name="!8ball", value="Ask the 8ball a question and you will receive an answer.")
         embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
         embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
+        embed.add_field(name="Alexa", value="If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!")
         await client.send_message(message.channel, embed=embed)
+
+    if(msg_chk.find("alexa play ") == 0):
+        discord.opus.load_opus(find_library("opus"))
+        url = message.content[len("alexa play "):]
+        voice_channel = message.author.voice_channel
+        vc = await client.join_voice_channel(voice_channel)
+        player = await vc.create_ytdl_player(url)
+        player.start()
 
     if(msg_chk.find("alexa") !=-1 and msg_chk.find("play") != -1 and msg_chk.find("despacito") != -1):
         msg = 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
