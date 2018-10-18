@@ -10,6 +10,14 @@ ball = ["It is certain.","It is decidedly so.","Without a doubt.","Yes - definit
 
 client = discord.Client()
 
+players = {}
+
+#async def play_yt(voice_channel,link):
+#    vc = await client.join_voice_channel(voice_channel)
+#    player = await vc.create_ytdl_player(url)
+#    player.start()
+#    return player
+
 @client.event
 async def on_message(message):
     # we do not want the bot to reply to itself
@@ -40,9 +48,29 @@ async def on_message(message):
         discord.opus.load_opus(find_library("opus"))
         url = message.content[len("alexa play "):]
         voice_channel = message.author.voice_channel
-        vc = await client.join_voice_channel(voice_channel)
-        player = await vc.create_ytdl_player(url)
-        player.start()
+        try:
+            vc = await client.join_voice_channel(voice_channel)
+        except:
+            if(client.is_voice_connected(message.server)):
+                vc = client.voice_client_in(message.server)
+        try:
+            player = players[str(vc.session_id)]
+            if(not player.is_playing()):
+                player = await vc.create_ytdl_player(url)
+                players[str(vc.session_id)] = player
+                player.start()
+            elif(player.is_done()):
+                player = await vc.create_ytdl_player(url)
+                players[str(vc.session_id)] = player
+                player.start()
+            else:
+                msg = "Theres already a song playing, please wait before requesting a new song."
+                await client.send_message(message.channel, msg)
+                return
+        except:
+            player = await vc.create_ytdl_player(url)
+            players[str(vc.session_id)] = player
+            player.start()
 
     if(msg_chk.find("alexa") !=-1 and msg_chk.find("play") != -1 and msg_chk.find("despacito") != -1):
         msg = 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
