@@ -44,7 +44,7 @@ async def on_message(message):
         embed.add_field(name="Alexa", value="If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!")
         await client.send_message(message.channel, embed=embed)
 
-    if(msg_chk.find(!resetplayer) == 0):
+    if(msg_chk.find("!resetplayer") == 0):
         discord.opus.load_opus(find_library("opus"))
         voice_channel = message.author.voice_channel
         try:
@@ -58,6 +58,7 @@ async def on_message(message):
             players[str(vc.session_id)] = None
         except:
             pass
+        await vc.disconnect()
 
     if(msg_chk.find("alexa play ") == 0):
         discord.opus.load_opus(find_library("opus"))
@@ -233,7 +234,7 @@ async def on_message(message):
         pps = -1
         width = im.size[0]
         height = im.size[1]
-	if(width > 1080 or height > 1080):
+        if(width > 1080 or height > 1080):
             msg = "Image is too large! Please try a smaller image."
             await client.send_message(message.channel, msg)
             return
