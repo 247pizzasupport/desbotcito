@@ -1,6 +1,6 @@
 #! /usr/bin/python3
 import discord, math, random, sqlite3, datetime
-import requests, json, re, os, shutil
+import requests, json, re, os, shutil, asyncio
 from PIL import Image,ImageDraw
 from ctypes.util import find_library
 
@@ -11,12 +11,30 @@ ball = ["It is certain.","It is decidedly so.","Without a doubt.","Yes - definit
 client = discord.Client()
 
 players = {}
+song_queue = {}
 
-#async def play_yt(voice_channel,link):
-#    vc = await client.join_voice_channel(voice_channel)
-#    player = await vc.create_ytdl_player(url)
-#    player.start()
-#    return player
+async def playNextSong(server, voice_channel):
+    discord.opus.load_opus(find_library("opus"))
+    try:
+        vc = await client.join_voice_channel(voice_channel)
+    except:
+        if(client.is_voice_connected(server)):
+            vc = client.voice_client_in(server)
+    if(str(vc.session_id) in song_queue and len(song_queue[str(vc.session_id)]) > 0):
+        try:
+            player = players[str(vc.session_id)]
+            if(not player.is_playing() or player.is_done()):
+                player = await vc.create_ytdl_player(song_queue[str(vc.session_id)].pop(0))
+                players[str(vc.session_id)] = player
+                player.start()
+                await asyncio.sleep(player.duration)
+                await playNextSong(server, voice_channel)
+        except:
+            player = await vc.create_ytdl_player(song_queue[str(vc.session_id)].pop(0))
+            players[str(vc.session_id)] = player
+            player.start()
+            await asyncio.sleep(player.duration)
+            await playNextSong(message.server, voice_channel)
 
 @client.event
 async def on_message(message):
@@ -75,18 +93,31 @@ async def on_message(message):
                 player = await vc.create_ytdl_player(url)
                 players[str(vc.session_id)] = player
                 player.start()
+                await asyncio.sleep(player.duration)
+                await playNextSong(message.server, voice_channel)
+                t.start()
             elif(player.is_done()):
                 player = await vc.create_ytdl_player(url)
                 players[str(vc.session_id)] = player
                 player.start()
+                await asyncio.sleep(player.duration)
+                await playNextSong(message.server, voice_channel)
             else:
-                msg = "Theres already a song playing, please wait before requesting a new song."
+                msg = "Theres already a song playing, added to queue."
+                q = []
+                if(str(vc.session_id) in song_queue):
+                    q = song_queue[str(vc.session_id)]
+                q.append(url)
+                song_queue[str(vc.session_id)] = q
+                msg = msg + " Current queue is: " + str(q)
                 await client.send_message(message.channel, msg)
                 return
         except:
             player = await vc.create_ytdl_player(url)
             players[str(vc.session_id)] = player
             player.start()
+            await asyncio.sleep(player.duration)
+            await playNextSong(message.server, voice_channel)
 
     if(msg_chk.find("alexa") !=-1 and msg_chk.find("play") != -1 and msg_chk.find("despacito") != -1):
         msg = 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
