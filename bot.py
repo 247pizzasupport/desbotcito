@@ -135,21 +135,23 @@ async def on_message(message):
     if(msg_chk.find("its been") != -1):
         await client.send_file(message.channel, os.environ.get('WORKING_PATH')+'assets/its_been.mp3')
 
-    if(msg_chk.find("how valid is ") == 0):
-        subject = ""
-        end = msg_chk.rfind("?")
-        if(end != -1):
-            subject = message.content[len("how valid is "):end]
-        else:
-            subject = message.content[len("how valid is "):]
-        validity = random.Random(hash(subject+str(datetime.datetime.now()))).randint(0,100)
-        msg = subject + " is " + str(validity) + "% valid."
-        await client.send_message(message.channel, msg)
+    if(msg_chk.split(" ")[0] == "how" and msg_chk.split(" ")[2] == "is"):
+         subject = ""
+         adjective = msg_chk.split(" ")[1]
+         end = msg_chk.rfind("?")
+         if(end != -1):
+             subject = message.content[len("how "+adjective+" is "):end]
+         else:
+             subject = message.content[len("how "+adjective+" is "):]
+         percent = random.Random(hash(subject+adjective+str(datetime.datetime.now()))).randint(0,100)
+         msg = subject + " is " + str(percent) + "% " + adjective + "."
+         await client.send_message(message.channel, msg)
 
-    if(msg_chk.find("how valid am i") == 0):
-        validity = random.Random(hash(str(message.author)+str(datetime.datetime.now()))).randint(50,100)
-        msg = "You are " + str(validity) + "% valid."
-        await client.send_message(message.channel, msg)
+    if(msg_chk.split(" ")[0] == "how" and msg_chk.split(" ")[2] == "am" and msg_chk.split(" ")[3].find("i") == 0):
+         adjective = msg_chk.split(" ")[1]
+         percent = random.Random(hash(adjective+str(datetime.datetime.now()))).randint(0,100)
+         msg = "You are " + str(percent) + "% " + adjective + "."
+         await client.send_message(message.channel, msg)
 
     if(msg_chk.find("!shrug") == 0):
         msg = "¯\_(ツ)_/¯"
@@ -214,7 +216,8 @@ async def on_message(message):
         msg = "Randomly selected anime: " + response["title"]
         await client.send_message(message.channel, msg)
 
-    msg_clean = re.sub("[^A-z0-9]","",msg_chk)
+    msg_clean = re.sub("[^A-z0-9 ]","",msg_chk)
+    print(msg_clean)
     if("vore" in msg_clean.split(" ") or "vored" in msg_clean.split(" ") or "vores" in msg_clean.split(" ") or "voring" in msg_clean.split(" ")):
         conn = sqlite3.connect(os.environ.get('WORKING_PATH')+'assets/desbotcito_db')
         c = conn.cursor()
