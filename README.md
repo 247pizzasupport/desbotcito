@@ -23,8 +23,8 @@ Below are the current list of functions that the bot has:
 * !roll XdY rolls X Y-sided dice and sends back the result.
 * !shrug (@ user) sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here).
 * !anime selects a random anime from MyAnimeList (In testing).
-* If you ask 'How valid is ___', the bot will tell you how valid it is (With new and improved pseudo-randomness!).
-* !8ball asks the 8ball a question and you will receive an answer.
+* If you ask 'How ___ is ___' or 'How ___ am I', the bot will tell you how valid it is (With new and improved word selection!).
+* !8ball followed by a question asks the 8ball a question and you will receive an answer.
 * !fmk x,y,z : Provide the bot with three options and she will select which ones to bed, wed, and behead.
 * !pixel: Messages containing an image along with this command will get a 16px version of that image returned back.
 * If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!
