@@ -129,7 +129,7 @@ async def on_message(message):
 
     if(msg_chk == "!bigdickenergy"):
         rng = random.randint(0,100)
-        msg = message.author.mention+' has '+str(rng)+'% Big Dick Energy,'
+        msg = message.author.mention+' has '+str(rng)+'% Big Dick Energy.'
         await client.send_message(message.channel, msg)
 
     if(msg_chk.find("its been") != -1):
