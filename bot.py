@@ -59,7 +59,7 @@ async def on_message(message):
         embed.add_field(name="!roll XdY",value="Rolls X Y-sided dice and sends back the result")
         embed.add_field(name="!shrug (@ user)",value="Sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here)")
         embed.add_field(name="!anime",value="Selects a random anime from MyAnimeList (In testing)")
-        embed.add_field(name="(Formerly) Valid, now How \_ is \_", value="If you ask 'How \___ is \___' or 'How \___ am I', the bot will tell you how \___ it is. (With new and improved word selection!)")
+        embed.add_field(name="(Formerly) Valid, now How \_ is \_", value="If you ask 'How \_\_\_ is \_\_\_' or 'How \_\_\_ am I', the bot will tell you how \_\_\_ it is. (With new and improved word selection!)")
         embed.add_field(name="!8ball (question)", value="Ask the 8ball a question and you will receive an answer.")
         embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
         embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
