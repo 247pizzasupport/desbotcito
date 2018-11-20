@@ -27,4 +27,6 @@ Below are the current list of functions that the bot has:
 * !8ball followed by a question asks the 8ball a question and you will receive an answer.
 * !fmk x,y,z : Provide the bot with three options and she will select which ones to bed, wed, and behead.
 * !pixel: Messages containing an image along with this command will get a 16px version of that image returned back.
+* Messages containing 'Africa by Toto' will get you a link to Africa by Toto. Incredible.
+* !vocaloid returns a randomly selected vocaloid song from the VocaloidDB API (imperfect).
 * If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!

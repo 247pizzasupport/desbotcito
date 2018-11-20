@@ -63,6 +63,8 @@ async def on_message(message):
         embed.add_field(name="!8ball (question)", value="Ask the 8ball a question and you will receive an answer.")
         embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
         embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
+        embed.add_field(name="Africa by Toto", value="Messages containing 'Africa by Toto' will get you a link to Africa by Toto. Incredible.")
+        embed.add_field(name="!vocaloid", value="Returns a randomly selected vocaloid song from the VocaloidDB API (imperfect).")
         embed.add_field(name="Alexa", value="If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!")
         await client.send_message(message.channel, embed=embed)
 
