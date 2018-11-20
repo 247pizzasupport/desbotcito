@@ -38,6 +38,10 @@ async def playNextSong(server, voice_channel):
 
 @client.event
 async def on_message(message):
+    if(message.content.find("69") != -1):
+        msg = "Nice."
+        await client.send_message(message.channel, msg)
+
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
@@ -55,7 +59,7 @@ async def on_message(message):
         embed.add_field(name="!roll XdY",value="Rolls X Y-sided dice and sends back the result")
         embed.add_field(name="!shrug (@ user)",value="Sends back the shrug emoji and optionally mentions another user in the message (Does not work with @ everyone and @ here)")
         embed.add_field(name="!anime",value="Selects a random anime from MyAnimeList (In testing)")
-        embed.add_field(name="(Formerly) Valid, now How _ is _", value="If you ask 'How ___ is ___' or 'How ___ am I', the bot will tell you how ___ it is. (With new and improved word selection!)")
+        embed.add_field(name="(Formerly) Valid, now How \_ is \_", value="If you ask 'How \___ is \___' or 'How \___ am I', the bot will tell you how \___ it is. (With new and improved word selection!)")
         embed.add_field(name="!8ball (question)", value="Ask the 8ball a question and you will receive an answer.")
         embed.add_field(name="!fmk x,y,z", value="Provide the bot with three options and she will select which ones to bed, wed, and behead.")
         embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
@@ -125,6 +129,10 @@ async def on_message(message):
 
     if(msg_chk.find("september") != -1 or msg_chk.find("do you remember") != -1):
         msg = 'https://www.youtube.com/watch?v=LI2hcbUf6TQ'
+        await client.send_message(message.channel, msg)
+
+    if(msg_chk.find("africa by toto") != -1):
+        msg = 'https://www.youtube.com/watch?v=FTQbiNvZqaY'
         await client.send_message(message.channel, msg)
 
     if(msg_chk == "!bigdickenergy"):
@@ -214,6 +222,22 @@ async def on_message(message):
             r = requests.get(url=url+str(id))
             response = json.loads(r.text)
         msg = "Randomly selected anime: " + response["title"]
+        await client.send_message(message.channel, msg)
+
+    if(msg_chk.find("!vocaloid") == 0):
+        url = "https://vocadb.net/api/songs?maxResults=1&getTotalCount=true"
+        r = requests.get(url)
+        count = json.loads(r.text)["totalCount"]
+        id = random.randint(0,count)
+        url = "https://vocadb.net/api/songs/" + str(id)
+        r = requests.get(url)
+        while(r.text.find("Object not found") != -1):
+            id = random.randint(0,count)
+            url = "https://vocadb.net/api/songs/" + str(id)
+            r = requests.get(url)
+        name = json.loads(r.text)["defaultName"]
+        artist = json.loads(r.text)["artistString"]
+        msg = "Randomly selected song is: " + name + " - " + artist
         await client.send_message(message.channel, msg)
 
     msg_clean = re.sub("[^A-z0-9 ]","",msg_chk)
