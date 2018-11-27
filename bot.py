@@ -198,6 +198,21 @@ async def on_message(message):
         msg = message.author.mention + ' ' + ball[result]
         await client.send_message(message.channel, msg)
 
+    if(msg_chk.find("!countdown") == 0):
+        now = message.timestamp.timestamp()
+        christmas = datetime.datetime.strptime('12-25-2018','%m-%d-%Y').timestamp() #should eventually make it so that it dynamically grabs the year
+        countdown = datetime.timedelta(seconds=christmas-now)
+        msg = ""
+        if(countdown.days > 1):
+            msg = "Only " + str(countdown.days) + " days until Christmas!"
+        elif(countdown.days == 1):
+            msg = "Tomorrow is Christmas!!"
+        elif(countdown.days == 0):
+            msg = "Today is Christmas!!!"
+        else:
+            msg = "Christmas is past :("
+        await client.send_message(message.channel, msg)
+
     if(msg_chk.find("!fmk ") == 0):
         msg = ""
         params = msg_chk[5:]
