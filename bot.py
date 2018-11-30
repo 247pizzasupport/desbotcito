@@ -205,7 +205,7 @@ async def on_message(message):
         msg = ""
         if(countdown.days > 1):
             msg = "Only " + str(countdown.days) + " days until Christmas!"
-        elif(countdown.days == 1):
+        elif(countdown.days <= 1 and countdown.seconds > 0):
             msg = "Tomorrow is Christmas!!"
         elif(countdown.days == 0):
             msg = "Today is Christmas!!!"
