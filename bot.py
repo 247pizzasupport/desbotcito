@@ -199,21 +199,6 @@ async def on_message(message):
         msg = message.author.mention + ' ' + ball[result]
         await client.send_message(message.channel, msg)
 
-    if(msg_chk.find("!countdown") == 0):
-        now = message.timestamp.timestamp()
-        christmas = datetime.datetime.strptime('12-25-2018','%m-%d-%Y').timestamp() #should eventually make it so that it dynamically grabs the year
-        countdown = datetime.timedelta(seconds=christmas-now)
-        msg = ""
-        if(countdown.days > 1):
-            msg = "Only " + str(countdown.days) + " days until Christmas!"
-        elif(countdown.days <= 1 and countdown.seconds > 0):
-            msg = "Tomorrow is Christmas!!"
-        elif(countdown.days == 0):
-            msg = "Today is Christmas!!!"
-        else:
-            msg = "Christmas is past :("
-        await client.send_message(message.channel, msg)
-
     if(msg_chk.find("!fmk ") == 0):
         msg = ""
         params = msg_chk[5:]
@@ -259,7 +244,13 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
 
     msg_clean = re.sub("[^A-z0-9 ]","",msg_chk)
-    print(msg_clean)
+
+    if("love" in msg_clean and "numbers man" in msg_clean):
+        options = ["Who doesn't?", "I know.", "Thanks.", "A horrible decision, really.", "Why", "\*laughs nervously\*", "\*laughs hysterically\*", "YEET", "I'm sorry.", "\*finger guns\*", "If only there was someone out there who loved you.", "Numbers Man loves you too, baby."]
+        r = random.randint(0,len(options)-1)
+        msg = options[r]
+        await client.send_message(message.channel, msg)
+
     if("vore" in msg_clean.split(" ") or "vored" in msg_clean.split(" ") or "vores" in msg_clean.split(" ") or "voring" in msg_clean.split(" ")):
         conn = sqlite3.connect(os.environ.get('WORKING_PATH')+'assets/desbotcito_db')
         c = conn.cursor()
