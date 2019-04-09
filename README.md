@@ -29,5 +29,4 @@ Below are the current list of functions that the bot has:
 * !pixel: Messages containing an image along with this command will get a 16px version of that image returned back.
 * Messages containing 'Africa by Toto' will get you a link to Africa by Toto. Incredible.
 * !vocaloid returns a randomly selected vocaloid song from the VocaloidDB API (imperfect).
-* !countdown tells you how many days remain until Christmas!
 * If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!

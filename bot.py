@@ -65,7 +65,6 @@ async def on_message(message):
         embed.add_field(name="!pixel", value="Messages containing an image along with this command will get a 16x16 version of that image returned back. (BETA)")
         embed.add_field(name="Africa by Toto", value="Messages containing 'Africa by Toto' will get you a link to Africa by Toto. Incredible.")
         embed.add_field(name="!vocaloid", value="Returns a randomly selected vocaloid song from the VocaloidDB API (imperfect).")
-        embed.add_field(name="!countdown", value="Tells you how many days remain until Christmas!")
         embed.add_field(name="Alexa", value="If you ask Alexa to play a youtube link for you while you're connected to a voice channel, she will play it for you!")
         await client.send_message(message.channel, embed=embed)
 
