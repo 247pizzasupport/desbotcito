@@ -130,8 +130,7 @@ async def on_message(message):
         await client.send_message(message.channel, msg)
 
     if(msg_chk.find("september") != -1 or msg_chk.find("do you remember") != -1):
-        msg = 'https://www.youtube.com/watch?v=LI2hcbUf6TQ'
-        await client.send_message(message.channel, msg)
+        await client.send_file(message.channel, os.environ.get('WORKING_PATH')+'assets/september.mp3')
 
     if(msg_chk.find("africa by toto") != -1):
         msg = 'https://www.youtube.com/watch?v=FTQbiNvZqaY'
